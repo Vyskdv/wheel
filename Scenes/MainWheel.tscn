@@ -1,0 +1,148 @@
+[gd_scene format=3 uid="uid://ba1tt0y33el5c"]
+
+[ext_resource type="VideoStream" uid="uid://1ut5mfmsqkfd" path="res://Assets/Videos/videoshortersmall.ogv" id="1_dr2ne"]
+[ext_resource type="Shader" uid="uid://so0u8c04cy0o" path="res://Assets/Shader/GreenScreenShader.gdshader" id="1_slyip"]
+[ext_resource type="Script" uid="uid://iwe2k1l2ov8" path="res://Scripts/Wheel/EffectDecider.gd" id="2_slyip"]
+[ext_resource type="Texture2D" uid="uid://db0c6ajth2osc" path="res://Assets/Sprites/wheel.png" id="3_8awob"]
+[ext_resource type="Texture2D" uid="uid://tous7wumnmv4" path="res://Assets/Sprites/musicnotes.png" id="3_ckhmu"]
+[ext_resource type="Shader" uid="uid://dc8ijrhoywxkn" path="res://Assets/Shader/Rotation.gdshader" id="3_gwgas"]
+[ext_resource type="Script" uid="uid://xcgitd5uj1e4" path="res://Scripts/Wheel/WheelSpin.gd" id="3_qqq8b"]
+[ext_resource type="AudioStream" uid="uid://bkofw22n8ld2b" path="res://Assets/Audio/SFX/GetSound.wav" id="6_8awob"]
+[ext_resource type="AudioStream" uid="uid://b6447q1k1tuwg" path="res://Assets/Audio/SFX/RollingSound.wav" id="6_gwgas"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dr2ne"]
+shader = ExtResource("1_slyip")
+shader_parameter/chroma_key_color = Color(0, 1, 0, 1)
+shader_parameter/pickup_range = 0.1
+shader_parameter/fade_amount = 0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ckhmu"]
+shader = ExtResource("3_gwgas")
+shader_parameter/base_texture = ExtResource("3_8awob")
+shader_parameter/speed = 0.0
+shader_parameter/max_time = 3.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_erthp"]
+
+[node name="Main" type="Control" unique_id=682688917]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1986104511]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CenterContainer" type="CenterContainer" parent="PanelContainer" unique_id=1697536613]
+layout_mode = 2
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="PanelContainer/CenterContainer" unique_id=876443151]
+unique_name_in_owner = true
+visible = false
+material = SubResource("ShaderMaterial_dr2ne")
+layout_mode = 2
+stream = ExtResource("1_dr2ne")
+autoplay = true
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/CenterContainer" unique_id=1743751423]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+texture = ExtResource("3_ckhmu")
+expand_mode = 3
+stretch_mode = 3
+
+[node name="WheelRect" type="TextureRect" parent="PanelContainer/CenterContainer" unique_id=1199314890]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_ckhmu")
+layout_mode = 2
+texture = ExtResource("3_8awob")
+stretch_mode = 4
+script = ExtResource("3_qqq8b")
+
+[node name="WheelSound" type="AudioStreamPlayer" parent="PanelContainer/CenterContainer/WheelRect" unique_id=991084527]
+unique_name_in_owner = true
+stream = ExtResource("6_gwgas")
+
+[node name="WheelTimer" type="Timer" parent="PanelContainer/CenterContainer/WheelRect" unique_id=1754173368]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="SlowTimer" type="Timer" parent="PanelContainer/CenterContainer/WheelRect" unique_id=161270997]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="StopTimer" type="Timer" parent="PanelContainer/CenterContainer/WheelRect" unique_id=185202651]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="Effect" type="Control" parent="PanelContainer" unique_id=231245239]
+layout_mode = 2
+script = ExtResource("2_slyip")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="PanelContainer/Effect" unique_id=469530351]
+unique_name_in_owner = true
+visible = false
+position = Vector2(0, -1)
+sprite_frames = SubResource("SpriteFrames_erthp")
+
+[node name="LabelPanel" type="PanelContainer" parent="PanelContainer/Effect" unique_id=2131766157]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.73
+anchor_right = 1.0
+anchor_bottom = 0.81
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/Effect" unique_id=653975238]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.8
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 32
+theme_override_font_sizes/bold_font_size = 32
+theme_override_font_sizes/bold_italics_font_size = 32
+theme_override_font_sizes/italics_font_size = 32
+theme_override_font_sizes/mono_font_size = 32
+bbcode_enabled = true
+text = "[bgcolor=#0009][wave][rainbow]gun[/rainbow][/wave][/bgcolor]"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="TextTimer" type="Timer" parent="PanelContainer/Effect" unique_id=1875893918]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="DelayTimer" type="Timer" parent="PanelContainer/Effect" unique_id=712254220]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="SpriteDisplayTimer" type="Timer" parent="PanelContainer/Effect" unique_id=2767936]
+unique_name_in_owner = true
+wait_time = 5.0
+one_shot = true
+
+[node name="DefaultGetPlayer" type="AudioStreamPlayer" parent="PanelContainer/Effect" unique_id=850043226]
+unique_name_in_owner = true
+stream = ExtResource("6_8awob")
+
+[node name="AudioPlayer" type="AudioStreamPlayer" parent="." unique_id=804599289]
+unique_name_in_owner = true
+autoplay = true

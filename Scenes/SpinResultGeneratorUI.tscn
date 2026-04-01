@@ -1,0 +1,175 @@
+[gd_scene format=3 uid="uid://bh8lkq20fmpbu"]
+
+[ext_resource type="Script" uid="uid://bwh26qj7iad5h" path="res://Scripts/Editor/SpinResultGenerator.gd" id="1_bnxvx"]
+[ext_resource type="Shader" uid="uid://so0u8c04cy0o" path="res://Assets/Shader/GreenScreenShader.gdshader" id="2_87v16"]
+[ext_resource type="Script" uid="uid://di4jl6bbo3p0p" path="res://Scripts/Editor/ResultSelection.gd" id="2_dblet"]
+[ext_resource type="Script" uid="uid://dv8nc5322mwl3" path="res://Scripts/Editor/VideoLoader.gd" id="3_y363s"]
+[ext_resource type="Script" uid="uid://dui4aspvdkckl" path="res://Scripts/Editor/AudioLoader.gd" id="4_87v16"]
+[ext_resource type="Script" uid="uid://47wpsn8ucys4" path="res://Scripts/Editor/SpriteLoader.gd" id="5_qu4xq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qu4xq"]
+shader = ExtResource("2_87v16")
+shader_parameter/chroma_key_color = Color(0, 1, 0, 1)
+shader_parameter/pickup_range = 0.1
+shader_parameter/fade_amount = 0.1
+
+[node name="SpinResultGenerator" type="Control" unique_id=760306832]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bnxvx")
+
+[node name="PreviewContainer" type="CenterContainer" parent="." unique_id=558231362]
+layout_mode = 1
+offset_left = 384.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="VideoPlayer" type="VideoStreamPlayer" parent="PreviewContainer" unique_id=785481862]
+unique_name_in_owner = true
+visible = false
+material = SubResource("ShaderMaterial_qu4xq")
+layout_mode = 2
+autoplay = true
+loop = true
+script = ExtResource("3_y363s")
+
+[node name="AudioPlayer" type="AudioStreamPlayer" parent="PreviewContainer" unique_id=1902574797]
+unique_name_in_owner = true
+autoplay = true
+script = ExtResource("4_87v16")
+
+[node name="Sprite" type="TextureRect" parent="PreviewContainer" unique_id=1561797222]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+stretch_mode = 3
+script = ExtResource("5_qu4xq")
+
+[node name="UIContainer" type="PanelContainer" parent="." unique_id=1463580578]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.2
+anchor_bottom = 1.0
+grow_vertical = 2
+
+[node name="EditorContainer" type="VBoxContainer" parent="UIContainer" unique_id=756953231]
+layout_mode = 2
+
+[node name="SelectedResult" type="OptionButton" parent="UIContainer/EditorContainer" unique_id=432429607]
+unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("2_dblet")
+
+[node name="ImportButton" type="Button" parent="UIContainer/EditorContainer" unique_id=1790636283]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Import"
+
+[node name="UpdateButton" type="Button" parent="UIContainer/EditorContainer" unique_id=97839914]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Update
+"
+
+[node name="ResultTextEdit" type="TextEdit" parent="UIContainer/EditorContainer" unique_id=829854718]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "Text that plays when the result is rolled.
+
+If you see this text, you can't import. Write something down!"
+wrap_mode = 1
+
+[node name="ColorSelectionContainer" type="VBoxContainer" parent="UIContainer/EditorContainer" unique_id=483861477]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="EnableGreenscreenButton" type="CheckButton" parent="UIContainer/EditorContainer/ColorSelectionContainer" unique_id=1009531876]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Enable Greenscreen"
+
+[node name="RangeContainer" type="HBoxContainer" parent="UIContainer/EditorContainer/ColorSelectionContainer" unique_id=96327265]
+layout_mode = 2
+
+[node name="RangeLabel" type="Label" parent="UIContainer/EditorContainer/ColorSelectionContainer/RangeContainer" unique_id=582871022]
+layout_mode = 2
+text = "Pickup Range"
+
+[node name="RangeSpinBox" type="SpinBox" parent="UIContainer/EditorContainer/ColorSelectionContainer/RangeContainer" unique_id=378195734]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.01
+max_value = 1.0
+step = 0.01
+value = 0.09999999999999999
+editable = false
+
+[node name="RangeSlider" type="HSlider" parent="UIContainer/EditorContainer/ColorSelectionContainer" unique_id=249207076]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 0.01
+max_value = 1.0
+step = 0.01
+value = 0.09999999999999999
+editable = false
+
+[node name="FadeContainer" type="HBoxContainer" parent="UIContainer/EditorContainer/ColorSelectionContainer" unique_id=1537916985]
+layout_mode = 2
+
+[node name="FadeLabel" type="Label" parent="UIContainer/EditorContainer/ColorSelectionContainer/FadeContainer" unique_id=1568018311]
+layout_mode = 2
+text = "Fade Amount"
+
+[node name="FadeSpinBox" type="SpinBox" parent="UIContainer/EditorContainer/ColorSelectionContainer/FadeContainer" unique_id=2103954864]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.01
+max_value = 1.0
+step = 0.01
+value = 0.09999999999999999
+editable = false
+
+[node name="FadeSlider" type="HSlider" parent="UIContainer/EditorContainer/ColorSelectionContainer" unique_id=814332182]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 0.01
+max_value = 1.0
+step = 0.01
+value = 0.09999999999999999
+editable = false
+
+[node name="SelectColorButton" type="Button" parent="UIContainer/EditorContainer/ColorSelectionContainer" unique_id=1684263983]
+unique_name_in_owner = true
+layout_mode = 2
+disabled = true
+text = "Select Greenscreen Color"
+
+[node name="ColorPreview" type="ColorRect" parent="UIContainer/EditorContainer/ColorSelectionContainer" unique_id=1515339111]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0, 0, 0, 0)
+
+[node name="ColorText" type="TextEdit" parent="UIContainer/EditorContainer/ColorSelectionContainer" unique_id=1206855091]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Greenscreen Color"
+editable = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UIContainer/EditorContainer/ColorSelectionContainer" unique_id=182209553]
+layout_mode = 2
+
+[node name="DeleteButton" type="Button" parent="UIContainer/EditorContainer" unique_id=391002924]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Delete Result"
