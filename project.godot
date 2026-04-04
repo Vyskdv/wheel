@@ -23,6 +23,8 @@ general/default_playback_type.web=0
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+window/size/transparent=true
+window/per_pixel_transparency/allowed=true
 
 [physics]
 
@@ -33,3 +35,4 @@ window/size/viewport_height=1080
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+viewport/transparent_background=true

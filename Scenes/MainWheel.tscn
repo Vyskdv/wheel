@@ -6,9 +6,11 @@
 [ext_resource type="Texture2D" uid="uid://db0c6ajth2osc" path="res://Assets/Sprites/wheel.png" id="3_8awob"]
 [ext_resource type="Texture2D" uid="uid://tous7wumnmv4" path="res://Assets/Sprites/musicnotes.png" id="3_ckhmu"]
 [ext_resource type="Shader" uid="uid://dc8ijrhoywxkn" path="res://Assets/Shader/Rotation.gdshader" id="3_gwgas"]
-[ext_resource type="Script" uid="uid://xcgitd5uj1e4" path="res://Scripts/Wheel/WheelSpin.gd" id="3_qqq8b"]
+[ext_resource type="Script" uid="uid://dqckarl6svna2" path="res://Scripts/Wheel/AscendingAnimation.gd" id="4_cehhy"]
 [ext_resource type="AudioStream" uid="uid://bkofw22n8ld2b" path="res://Assets/Audio/SFX/GetSound.wav" id="6_8awob"]
 [ext_resource type="AudioStream" uid="uid://b6447q1k1tuwg" path="res://Assets/Audio/SFX/RollingSound.wav" id="6_gwgas"]
+[ext_resource type="Script" uid="uid://bqg5hh0nupqwn" path="res://Scripts/Wheel/WheelSpin2D.gd" id="7_70v1s"]
+[ext_resource type="Texture2D" uid="uid://gf5v0afo60tt" path="res://Assets/Sprites/woolybean.png" id="9_k3xfc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dr2ne"]
 shader = ExtResource("1_slyip")
@@ -16,10 +18,10 @@ shader_parameter/chroma_key_color = Color(0, 1, 0, 1)
 shader_parameter/pickup_range = 0.1
 shader_parameter/fade_amount = 0.1
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ckhmu"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hq8fn"]
 shader = ExtResource("3_gwgas")
 shader_parameter/base_texture = ExtResource("3_8awob")
-shader_parameter/speed = 0.0
+shader_parameter/speed = 0.03
 shader_parameter/max_time = 3.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_erthp"]
@@ -62,27 +64,37 @@ texture = ExtResource("3_ckhmu")
 expand_mode = 3
 stretch_mode = 3
 
-[node name="WheelRect" type="TextureRect" parent="PanelContainer/CenterContainer" unique_id=1199314890]
-unique_name_in_owner = true
-material = SubResource("ShaderMaterial_ckhmu")
-layout_mode = 2
-texture = ExtResource("3_8awob")
-stretch_mode = 4
-script = ExtResource("3_qqq8b")
+[node name="Node2D" type="Node2D" parent="PanelContainer/CenterContainer" unique_id=47595268]
+position = Vector2(700, 1080)
+script = ExtResource("4_cehhy")
 
-[node name="WheelSound" type="AudioStreamPlayer" parent="PanelContainer/CenterContainer/WheelRect" unique_id=991084527]
+[node name="Wheel" type="Sprite2D" parent="PanelContainer/CenterContainer/Node2D" unique_id=815643737]
+material = SubResource("ShaderMaterial_hq8fn")
+texture = ExtResource("3_8awob")
+centered = false
+script = ExtResource("7_70v1s")
+
+[node name="WheelSound" type="AudioStreamPlayer" parent="PanelContainer/CenterContainer/Node2D/Wheel" unique_id=991084527]
 unique_name_in_owner = true
 stream = ExtResource("6_gwgas")
 
-[node name="WheelTimer" type="Timer" parent="PanelContainer/CenterContainer/WheelRect" unique_id=1754173368]
+[node name="WheelTimer" type="Timer" parent="PanelContainer/CenterContainer/Node2D/Wheel" unique_id=1754173368]
 unique_name_in_owner = true
 one_shot = true
 
-[node name="SlowTimer" type="Timer" parent="PanelContainer/CenterContainer/WheelRect" unique_id=161270997]
+[node name="SlowTimer" type="Timer" parent="PanelContainer/CenterContainer/Node2D/Wheel" unique_id=161270997]
 unique_name_in_owner = true
 one_shot = true
 
-[node name="StopTimer" type="Timer" parent="PanelContainer/CenterContainer/WheelRect" unique_id=185202651]
+[node name="StopTimer" type="Timer" parent="PanelContainer/CenterContainer/Node2D/Wheel" unique_id=185202651]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="Wooly" type="Sprite2D" parent="PanelContainer/CenterContainer/Node2D" unique_id=766596804]
+position = Vector2(270, 702)
+texture = ExtResource("9_k3xfc")
+
+[node name="AscendingTimer" type="Timer" parent="PanelContainer/CenterContainer/Node2D" unique_id=375870639]
 unique_name_in_owner = true
 one_shot = true
 
